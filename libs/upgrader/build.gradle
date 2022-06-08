@@ -1,0 +1,3 @@
+apply plugin: 'com.android.application'
+apply from: getGradleFile('common_config')
+apply from: getGradleFile('common_dependencies')
