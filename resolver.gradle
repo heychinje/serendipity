@@ -1,0 +1,25 @@
+println "---Resolver for Apps Gradle scripts---"
+
+File currentDir = buildscript.getSourceFile().parentFile
+ext.repoRoot = currentDir
+
+ext.addModule = { name, path ->
+    File dir = new File(repoRoot, path)
+    println "include module: ${name}\t-> ${dir}"
+    include ":$name"
+    project(":$name").projectDir = new File(repoRoot, path)
+}
+
+ext.getGradleFile = { name ->
+    File result = new File(repoRoot, "${name}.gradle")
+    println "resolved gradle file: " + result
+    return result
+}
+
+ext.getKeyStoreFile = { name ->
+    File result = new File(repoRoot, "${name}.jks")
+    println "resolved keystore file: " + result
+    return result
+}
+
+ext.publishURL = repoRoot.path + "/outputs"

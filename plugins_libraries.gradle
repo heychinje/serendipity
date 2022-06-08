@@ -1,0 +1,111 @@
+ext.versions = [
+        // Android SDK versions
+        minSdk              : 23,
+        targetSdk           : 29,
+        compileSdk          : 31,
+        buildTools          : '30.0.2',
+
+        // plugins
+        androidGradlePlugin : '4.2.0',
+        kotlinGradlePlugin  : "1.4.32",
+        safeargsGradlePlugin: '2.3.5',
+        hilt                : '2.35.1',
+
+        // android
+        kotlinstd           : '1.4.32',
+        coroutineVersion    : '1.5.1',
+        androidxAppCompat   : '1.2.0',
+        androidxCoreKtx     : '1.2.0',
+        androidxConstraint  : '2.0.4',
+        androidxNavigation  : '2.3.0',
+        lifecycle           : '2.3.1',
+        room                : '2.2.5',
+        material            : '1.3.0',
+        viewPager2          : '1.0.0',
+        androidxFragmentKtx : '1.1.0',
+
+        // network
+        retrofit2           : '2.9.0',
+        loggingInterceptor  : '3.9.0',
+
+        // data store
+        datastore           : '1.0.0-alpha06',
+        protobuf            : '3.10.0',
+        preferences         : '1.0.0-alpha08',
+
+        // app center
+        appCenter           : '4.1.0',
+
+        // swipe to refresh layout
+        swiperefreshlayout  : '1.1.0',
+
+        // log
+        timber              : '5.0.1',
+
+        // file
+        apacheCommonsIo     : '2.11.0',
+
+        // MP Chart
+        mpChart             : 'v3.1.0',
+
+        // pinyin
+        tinyPinyin          : '2.0.3',
+]
+
+ext.compilePlugins = [
+        androidPlugin           : "com.android.tools.build:gradle:$versions.androidGradlePlugin",
+        kotlinPlugin            : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinGradlePlugin",
+        navigationSafeArgsPlugin: "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.safeargsGradlePlugin",
+        hiltPlugin              : "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt",
+]
+
+ext.libraries = [
+        kotlinstd              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlinstd",
+        coroutineCore          : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutineVersion",
+        coroutineCoreJVM       : "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$versions.coroutineVersion",
+        coroutineAndroid       : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion",
+        androidxAppCompat      : "androidx.appcompat:appcompat:$versions.androidxAppCompat",
+        androidxCoreKtx        : "androidx.core:core-ktx:$versions.androidxCoreKtx",
+        androidxConstraint     : "androidx.constraintlayout:constraintlayout:$versions.androidxConstraint",
+        androidxNavigation     : "androidx.navigation:navigation-fragment-ktx:$versions.androidxNavigation",
+        androidxNavigationUIKtx: "androidx.navigation:navigation-ui-ktx:$versions.androidxNavigation",
+        viewPager2             : "androidx.viewpager2:viewpager2:$versions.viewPager2",
+        androidxFragmentKtx    : "androidx.fragment:fragment-ktx:$versions.androidxFragmentKtx",
+
+        lifecycleLiveData      : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
+        lifecycleViewModel     : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle",
+        lifecycleRuntime       : "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle",
+
+        roomCompiler           : "androidx.room:room-compiler:$versions.room",
+        roomKtx                : "androidx.room:room-ktx:$versions.room",
+        roomRuntime            : "androidx.room:room-runtime:$versions.room",
+
+        material               : "com.google.android.material:material:$versions.material",
+
+        hiltAndroid            : "com.google.dagger:hilt-android:$versions.hilt",
+        hiltCompiler           : "com.google.dagger:hilt-compiler:$versions.hilt",
+
+        retrofit2              : "com.squareup.retrofit2:retrofit:$versions.retrofit2",
+        converterGson          : "com.squareup.retrofit2:converter-gson:$versions.retrofit2",
+        loggingInterceptor     : "com.squareup.okhttp3:logging-interceptor:$versions.loggingInterceptor",
+
+        datastore              : "androidx.datastore:datastore:$versions.datastore",
+        protobufJavalite       : "com.google.protobuf:protobuf-javalite:$versions.protobuf",
+        preferences            : "androidx.datastore:datastore-preferences:$versions.preferences",
+
+        appCenterDistribute    : "com.microsoft.appcenter:appcenter-distribute:$versions.appCenter",
+        appCenterAnalytics     : "com.microsoft.appcenter:appcenter-analytics:$versions.appCenter",
+        appCenterCrashes       : "com.microsoft.appcenter:appcenter-crashes:$versions.appCenter",
+
+        swiperefreshlayout     : "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swiperefreshlayout",
+
+        timber                 : "com.jakewharton.timber:timber:$versions.timber",
+
+        apacheCommonsIo        : "commons-io:commons-io:$versions.apacheCommonsIo",
+
+        mpChart                : "com.github.PhilJay:MPAndroidChart:$versions.mpChart",
+
+        tinyPinyinCore         : "com.github.promeg:tinypinyin:$versions.tinyPinyin", // core lib
+        tinyPinyinAndroidCnCity: "com.github.promeg:tinypinyin-lexicons-android-cncity:$versions.tinyPinyin", // optional, for China region on Android
+        tinyPinyinJavaCnCity   : "com.github.promeg:tinypinyin-lexicons-java-cncity:$versions.tinyPinyin", // optional, for China region on Java
+]

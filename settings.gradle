@@ -1,0 +1,8 @@
+rootProject.name = "Serendipity"
+apply from: 'resolver.gradle'
+
+// add application module
+addModule('app-serendipity','apps/serendipity')
+
+// add library module
+addModule('lib-upgrader','libs/upgrader')

@@ -1,0 +1,154 @@
+import java.security.MessageDigest
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-parcelize'
+/* About proto data store config, please see the follows:
+ *     [https://developers.google.cn/protocol-buffers/docs/kotlintutorial]
+ *     [https://github.com/protocolbuffers/protobuf/tree/master/examples]
+ *     [https://developer.android.google.cn/topic/libraries/architecture/datastore?hl=zh-cn]
+ *     [https://blog.csdn.net/CQ0911/article/details/115467679]
+ *     [https://juejin.cn/post/6999823367008157710]
+ */
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+
+        versionName getAppVersionName()
+        versionCode getAppVersionCode()
+
+        buildConfigField "int", "GIT_COMMIT_VERSION_CODE", gitCommitVersionCode()
+        buildConfigField "String", "GIT_LAST_COMMIT_ID", gitLastCommitIdString()
+        buildConfigField "String", "GIT_LAST_COMMIT_TIMESTAMP", gitLastCommitTime()
+        buildConfigField "int", "LOCAL_CODE_CHANGE_COUNT", gitLocalCodeChangesSize()
+//        buildConfigField "String", "LOCAL_CODE_CHANGES", gitLocalCodeChanges()
+        buildConfigField "String", "BUILD_TIME_TEXT", buildTimeString()
+        buildConfigField "long", "BUILD_TIME", buildTime()
+        buildConfigField "String", "BUILD_TAG", buildTagString()
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    signingConfigs {
+        release {
+            File strFile = getKeyStoreFile('wz')
+            storeFile file(strFile)
+            storePassword "wz@20211009"
+            keyPassword "wz@20211009"
+            keyAlias "wz"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    viewBinding {
+        enabled true
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
+    lintOptions {
+        checkDependencies true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        // choose the first processor, no matter what how many processors found
+        pickFirst "META-INF/gradle/incremental.annotation.processors"
+    }
+
+    // output package file name
+    archivesBaseName = "-" +
+            gitLastCommitId() + "-" +
+            new Date().format("yyyy-MM-dd_HH-mm-ss") +
+            "-v" +
+            getAppVersionName() + "-" +
+            getAppVersionCode()
+}
+
+
+/* common functions */
+
+private String getAppVersionName() {
+    (project.hasProperty("version_name") ? project.version_name : "Dev-Version")
+}
+
+private int getAppVersionCode() {
+    return Integer.parseInt(project.hasProperty("version_code") ? project.version_code : "999999999")
+}
+
+private static String buildTime() {
+    return (System.currentTimeMillis() / 1000).toInteger()
+}
+
+private static String buildTimeString() {
+    return "\"" + new Date().format("yyyy-MM-dd HH:mm:ss") + "\""
+}
+
+private static String buildTag() {
+    return "${gitLocalCodeChangesSize()}${buildTime()}"
+}
+
+private static String buildTagString() {
+    return "\"${buildTag()}\""
+}
+
+private static String gitCommitVersionCode() {
+    return "git rev-list HEAD --first-parent --count".execute().text.trim()
+}
+
+private static String gitLastCommitId() {
+    return "${"git rev-parse --short HEAD".execute().text.trim()}"
+}
+
+private static String gitLastCommitIdString() {
+    return "\"${gitLastCommitId()}\""
+}
+
+private static String gitLastCommitTime() {
+    return "\"${"git log -1 --format=%ct".execute().text.trim()}\""
+}
+
+private static String gitLocalCodeChanges() {
+    return "${"git status -s".execute().text.trim()}"
+}
+
+private static String gitLocalCodeChangesSize() {
+    String result = "git status -s".execute().text.trim()
+    if (result.length() == 0) {
+        return 0
+    } else {
+        return result.split("\n").length
+    }
+}
+
+private static String md5(String content) {
+    return "${MessageDigest.getInstance("MD5").digest("$content".bytes).encodeHex().toString().toLowerCase()}"
+}
